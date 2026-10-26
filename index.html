@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Elegance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Studio Elegance</h1>
+<p>Projeto demonstrativo de salão e simulador de caixa.</p>
+    <nav>
+      <a href="#home">Início</a>
+      <a href="#services">Serviços</a>
+      <a href="#simulador">Simulador 💸</a>
+      <a href="#contact">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <h2>Realce sua beleza natural ✨</h2>
+    <p>Transforme seu visual com nossos profissionais especializados. A sua beleza é celebrada todos os dias!</p>
+    <a href="#contact" class="btn">Agende um horário 💅</a>
+  </section>
+
+  <section class="services" id="services">
+    <h3>Nossos Serviços</h3>
+    <div class="service-list">
+      <div class="service-item">
+        <h4>✂️ Cortes e Penteados</h4>
+        <p>Estilo moderno, clássico ou criativo.</p>
+      </div>
+      <div class="service-item">
+        <h4>🎨 Coloração</h4>
+        <p>Realce sua identidade com as melhores cores.</p>
+      </div>
+      <div class="service-item">
+        <h4>💅 Manicure e Pedicure</h4>
+        <p>Unhas impecáveis com muito estilo.</p>
+      </div>
+      <div class="service-item">
+        <h4>👁️ Design de Sobrancelhas</h4>
+        <p>Olhar marcante e simetria perfeita.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="simulator" id="simulador">
+    <h3>Simulador de Caixa 💸</h3>
+    <select aria-label="Serviço ou produto" id="itemSelect">
+      <option value="Corte|35">✂️ Corte - R$35</option>
+      <option value="Escova|30">🧴 Escova - R$30</option>
+      <option value="Hidratação|40">💧 Hidratação - R$40</option>
+      <option value="Esmaltação|25">💅 Esmaltação - R$25</option>
+      <option value="Shampoo|20">🧼 Shampoo - R$20</option>
+    </select>
+    <button onclick="adicionarItem()">Adicionar</button>
+    <ul id="listaItens"></ul>
+    <p><strong>Total: R$<span id="total">0.00</span></strong></p>
+    <input type="number" aria-label="Valor pago em reais" min="0" step="0.01" id="valorPago" placeholder="Valor pago" />
+    <button onclick="calcularTroco()">Calcular Troco</button>
+    <p id="troco"></p>
+    <p id="brinde" class="brinde"></p>
+    <button onclick="limparCompra()">🧹 Limpar Compra</button>
+  </section>
+
+  <footer id="contact">
+    <p>Studio Elegance &copy; 2025 | Endereço fictício para demonstração</p>
+    <p>Sem atendimento ou agendamento real</p>
+  </footer>
+
+<script src="script.js"></script>
+</body>
+</html>
