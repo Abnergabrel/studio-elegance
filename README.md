@@ -1,27 +1,37 @@
-# Studio Elegance — Site e simulador de caixa
+# Studio Elegance — Beleza no seu tempo
 
 ![Interface do projeto](preview.jpg)
 
-Página demonstrativa de salão com serviços e simulador de soma de itens, troco e limpeza da compra.
+Site conceito de salão com estética editorial, apresentação de serviços e simulador de atendimento.
 
 ## Tecnologias
 
-HTML, CSS e JavaScript, sem instalação de dependências para executar.
+HTML, CSS e JavaScript, sem instalação de dependências. As fontes são carregadas do Google Fonts.
 
 ## Executar
 
-Baixe os arquivos e abra `index.html` em um navegador moderno. Mantenha todos os arquivos na mesma pasta. Também é possível servir a pasta com um servidor HTTP local.
+Baixe os arquivos e abra `index.html` em um navegador moderno, mantendo as imagens, estilos e scripts na mesma pasta. Também é possível servir a pasta em um servidor HTTP local.
 
-## Verificar os fluxos
+## Funcionalidades
 
-1. Adicione dois serviços e confira a soma.
-2. Informe um pagamento e calcule o troco.
-3. Confira pagamento insuficiente, campo vazio e limpeza da compra.
+- Interface responsiva com navegação por seções.
+- Seleção, quantidade e remoção de cuidados.
+- Total e regra demonstrativa acima de R$ 100.
+- Validação do valor pago e cálculo de troco em centavos.
+- Limpeza completa da experiência.
 
-## Escopo e limitações
+## Verificação manual
 
-Não há agendamento, transação ou cadastro real. Os itens ficam apenas na memória da página. Fontes são carregadas do Google Fonts e podem depender de acesso à internet.
+1. Adicionar dois cortes: total de R$ 70.
+2. Pagar R$ 100: troco de R$ 30.
+3. Conferir valor insuficiente e campo vazio.
+4. Adicionar hidratação e conferir a regra acima de R$ 100.
+5. Remover itens e limpar a experiência.
 
-## Origem
+## Escopo
 
-Projeto de estudo de [Abner Gabriel](https://github.com/Abnergabrel), separado da pasta [salao-de-beleza](https://github.com/Abnergabrel/JavaScript/tree/main/salao-de-beleza) para apresentação independente. Esta versão recebeu ajustes de funcionamento e documentação. O material original permanece preservado.
+Salão e preços fictícios. Não realiza agendamentos, transações ou atendimento real. Itens ficam na memória da página e são descartados ao recarregar.
+
+## Autoria e evolução
+
+Projeto de estudo de [Abner Gabriel](https://github.com/Abnergabrel). Versão reformulada em 26/10/2026, mantendo o histórico do repositório.

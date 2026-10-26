@@ -1,54 +1,9 @@
-let itens = [];
-
-    function adicionarItem() {
-      const select = document.getElementById('itemSelect');
-      const [nome, preco] = select.value.split('|');
-      itens.push({ nome, preco: parseFloat(preco) });
-      atualizarLista();
-    }
-
-    function atualizarLista() {
-      const lista = document.getElementById('listaItens');
-      const total = document.getElementById('total');
-      const brinde = document.getElementById('brinde');
-      lista.innerHTML = '';
-      let soma = 0;
-      itens.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.nome} - R$${item.preco.toFixed(2)}`;
-        lista.appendChild(li);
-        soma += item.preco;
-      });
-      total.textContent = soma.toFixed(2);
-      brinde.textContent = soma > 100 ? '🎁 Parabéns! Você ganhou um brinde especial!' : '';
-    }
-
-    function calcularTroco() {
-      const pago = parseFloat(document.getElementById('valorPago').value);
-      const total = parseFloat(document.getElementById('total').textContent);
-      if (!Number.isFinite(pago) || pago < 0) {
-        document.getElementById('troco').textContent = 'Informe um valor pago válido.';
-        return;
-      }
-      const troco = Math.round((pago - total) * 100) / 100;
-      document.getElementById('troco').textContent =
-        troco >= 0 ? `Troco: R$${troco.toFixed(2)}` : 'Valor insuficiente';
-    }
-
-    function limparCompra() {
-      itens = [];
-      document.getElementById('listaItens').innerHTML = '';
-      document.getElementById('total').textContent = '0.00';
-      document.getElementById('valorPago').value = '';
-      document.getElementById('troco').textContent = '';
-      document.getElementById('brinde').textContent = '';
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-    });
-  });
+const services=[{id:'corte',name:'Corte',price:35,detail:'Uma nova forma de se expressar.'},{id:'escova',name:'Escova',price:30,detail:'Leveza e movimento na finalização.'},{id:'hidratacao',name:'Hidratação',price:40,detail:'Um momento de cuidado para os fios.'},{id:'esmaltacao',name:'Esmaltação',price:25,detail:'Cuidado nos pequenos detalhes.'},{id:'shampoo',name:'Shampoo',price:20,detail:'Um complemento para o seu ritual.'}];
+const $=s=>document.querySelector(s),money=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});let order=[],toastTimer;
+function total(){return order.reduce((sum,i)=>sum+services.find(s=>s.id===i.id).price*i.quantity,0);}
+function notify(text){$('#toast').textContent=text;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),2500);}
+function add(id){if(!services.some(s=>s.id===id))return;const item=order.find(i=>i.id===id);if(item){if(item.quantity>=20){notify('Limite de 20 unidades por cuidado nesta demonstração.');return;}item.quantity++;}else order.push({id,quantity:1});render();notify('Cuidado adicionado ao seu ritual.');}
+function render(){const list=$('#order-items');list.replaceChildren();if(!order.length){const p=document.createElement('p');p.className='order-empty';p.textContent='Seu ritual começa com uma escolha. Adicione um cuidado ao lado para montar a experiência.';list.append(p);}order.forEach(item=>{const s=services.find(x=>x.id===item.id),row=document.createElement('article');row.className='order-item';row.innerHTML=`<div><h4>${s.name}</h4><p>${money(s.price)} POR UNIDADE</p></div><strong>${money(s.price*item.quantity)}</strong><div class="quantity"><button data-action="minus" data-id="${s.id}" aria-label="Diminuir ${s.name}">−</button><span>${item.quantity}</span><button data-action="plus" data-id="${s.id}" aria-label="Aumentar ${s.name}">+</button><button data-action="remove" data-id="${s.id}" class="remove" aria-label="Remover ${s.name}">Remover</button></div>`;list.append(row);});$('#order-total').textContent=money(total());$('#gift-message').textContent=total()>100?'✧ Um mimo para completar o ritual. Benefício fictício deste simulador.':'';$('#change-result').textContent='';}
+services.forEach(s=>{const row=document.createElement('article');row.className='service-option';row.innerHTML=`<div><h4>${s.name}</h4><p>${s.detail}</p></div><div><strong>${money(s.price)}</strong><button data-service="${s.id}" aria-label="Adicionar ${s.name}">+</button></div>`;$('#service-options').append(row);});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-service]');if(b)add(b.dataset.service);});$('#order-items').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const item=order.find(i=>i.id===b.dataset.id);if(!item)return;if(b.dataset.action==='plus'){add(item.id);return;}if(b.dataset.action==='remove')order=order.filter(i=>i!==item);if(b.dataset.action==='minus'){item.quantity--;order=order.filter(i=>i.quantity>0);}render();});
+$('#calculate').addEventListener('click',()=>{const input=$('#paid'),raw=input.value.trim(),paid=Number(raw),result=$('#change-result');if(!order.length){result.textContent='Escolha ao menos um cuidado antes de calcular.';return;}if(!raw||!Number.isFinite(paid)||paid<0||paid>1000000||Math.abs(paid*100-Math.round(paid*100))>1e-6){result.textContent='Informe um valor válido, com até duas casas decimais.';input.focus();return;}const change=Math.round(paid*100)-Math.round(total()*100);result.textContent=change<0?`Ainda faltam ${money(-change/100)} para completar o valor.`:`Seu troco: ${money(change/100)}.`;});$('#paid').addEventListener('input',()=>$('#change-result').textContent='');$('#clear-order').addEventListener('click',()=>{order=[];$('#paid').value='';render();notify('Experiência limpa. Pronta para recomeçar.');});render();
